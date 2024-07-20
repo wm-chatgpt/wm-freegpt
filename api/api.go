@@ -31,9 +31,6 @@ func init() {
 	group.GET("/api/auth/csrf", AuthCsrf)
 	group.POST("/api/auth/signin/login-web", AuthSigninLoginWeb)
 	group.POST("/api/auth/signin/auth0", AuthSigninAuth0)
-	group.GET("/setup", Setup)
-	group.POST("/setup", SetupPost)
-
 	group.GET("/login", Login)
 	group.POST("/login", LoginPost)
 	group.GET("/auth/logout", AuthLogout)

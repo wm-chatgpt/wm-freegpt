@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/gogf/gf/v2/encoding/gjson"
-	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gclient"
 	"github.com/gogf/gf/v2/os/gctx"
@@ -15,16 +14,15 @@ import (
 )
 
 var (
-	PORT         = 8080                                // 端口
+	PORT         = 9800                                // 端口
 	AssetPrefix  = "https://oaistatic-cdn.closeai.biz" // 资源前缀
 	CacheBuildId = "0tFA7GWwXvruSzwhEYslA"             // 缓存版本号
 	BuildId      = "0tFA7GWwXvruSzwhEYslA"             // 线上版本号
 	Script       = "https://cdn.oaistatic.com/_next/static/chunks/2565-263427db2ed7a61a.js?dpl=37f91bfd782f6b4fb81dd5cd885a42d5d31cc4a3"
 	Dpl          = "dpl=37f91bfd782f6b4fb81dd5cd885a42d5d31cc4a3"
-
-	Gclient    = g.Client() // http客户端
-	ArkoseUrl  = "/v2/"
-	GatewayUrl = g.Cfg().MustGetWithEnv(gctx.New(), "GatewayUrl").String()
+	Gclient      = g.Client() // http客户端
+	ArkoseUrl    = "/v2/"
+	GatewayUrl   = g.Cfg().MustGetWithEnv(gctx.New(), "GatewayUrl").String()
 
 	envScriptTpl = `
 	<script>
@@ -166,21 +164,4 @@ func GetBuildId(ctx g.Ctx) (buildId, script, dpl string) {
 	g.Log().Info(ctx, "Check tcr9i buildId: ", buildId)
 	return
 
-}
-
-// 刷新账号信息
-func RefreshSession(ctx g.Ctx, refreshCookie string) (session *gjson.Json, err error) {
-	res, err := ProxyClient.ContentJson().Post(ctx, GatewayUrl+"/auth/refresh", g.Map{"refreshCookie": refreshCookie})
-	if err != nil {
-		g.Log().Error(ctx, "RefreshUserToken Error: ", err)
-		return
-	}
-	defer res.Close()
-	if res.StatusCode != 200 {
-		err = gerror.Newf("RefreshUserToken Error: %d", res.StatusCode)
-		g.Log().Error(ctx, err)
-		return
-	}
-	refreshCookie = res.GetCookie("__Secure-next-auth.session-token")
-	return
 }

@@ -2,11 +2,10 @@ package main
 
 import (
 	"cockroachai/api"
-	"cockroachai/arkose"
-	backendapi "cockroachai/backend-api"
 	"cockroachai/config"
-	"cockroachai/next"
-
+	"cockroachai/module/arkose"
+	"cockroachai/module/backend-api"
+	"cockroachai/module/next"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
 )
