@@ -70,9 +70,9 @@ func Index(r *ghttp.Request) {
 func C(r *ghttp.Request) {
 	ctx := r.GetCtx()
 
-	if r.Session.MustGet("userToken").IsEmpty() {
+	t := r.Cookie.Get(config.AccessToken).String()
+	if t == "" {
 		r.Response.RedirectTo("/login")
-		return
 	}
 	convId := r.GetRouter("convId").String()
 
@@ -128,9 +128,9 @@ func C(r *ghttp.Request) {
 // Discovery 发现
 func Discovery(r *ghttp.Request) {
 	ctx := r.GetCtx()
-	if r.Session.MustGet("userToken").IsEmpty() {
+	t := r.Cookie.Get(config.AccessToken).String()
+	if t == "" {
 		r.Response.RedirectTo("/login")
-		return
 	}
 	props := `
   {
@@ -180,9 +180,9 @@ func Discovery(r *ghttp.Request) {
 
 func Gpts(r *ghttp.Request) {
 	ctx := r.GetCtx()
-	if r.Session.MustGet("userToken").IsEmpty() {
+	t := r.Cookie.Get(config.AccessToken).String()
+	if t == "" {
 		r.Response.RedirectTo("/login")
-		return
 	}
 	props := `
   {
@@ -234,9 +234,9 @@ func Gpts(r *ghttp.Request) {
 func Editor(r *ghttp.Request) {
 	ctx := r.GetCtx()
 
-	if r.Session.MustGet("userToken").IsEmpty() {
+	t := r.Cookie.Get(config.AccessToken).String()
+	if t == "" {
 		r.Response.RedirectTo("/login")
-		return
 	}
 
 	props := `
@@ -295,9 +295,9 @@ func Editor(r *ghttp.Request) {
 func Slug(r *ghttp.Request) {
 	ctx := r.GetCtx()
 
-	if r.Session.MustGet("userToken").IsEmpty() {
+	t := r.Cookie.Get(config.AccessToken).String()
+	if t == "" {
 		r.Response.RedirectTo("/login")
-		return
 	}
 	slug := r.GetRouter("slug").String()
 
@@ -352,9 +352,9 @@ func Slug(r *ghttp.Request) {
 // G 游戏
 func G(r *ghttp.Request) {
 	ctx := r.GetCtx()
-	if r.Session.MustGet("userToken").IsEmpty() {
+	t := r.Cookie.Get(config.AccessToken).String()
+	if t == "" {
 		r.Response.RedirectTo("/login")
-		return
 	}
 	gizmoId := r.GetRouter("gizmoId").String()
 	props := `
@@ -410,9 +410,9 @@ func G(r *ghttp.Request) {
 func GC(r *ghttp.Request) {
 	ctx := r.GetCtx()
 
-	if r.Session.MustGet("userToken").IsEmpty() {
+	t := r.Cookie.Get(config.AccessToken).String()
+	if t == "" {
 		r.Response.RedirectTo("/login")
-		return
 	}
 	gizmoId := r.GetRouter("gizmoId").String()
 	convId := r.GetRouter("convId").String()
@@ -470,9 +470,9 @@ func GC(r *ghttp.Request) {
 // Mine 我的
 func Mine(r *ghttp.Request) {
 	ctx := r.GetCtx()
-	if r.Session.MustGet("userToken").IsEmpty() {
+	t := r.Cookie.Get(config.AccessToken).String()
+	if t == "" {
 		r.Response.RedirectTo("/login")
-		return
 	}
 	props := `
   {
