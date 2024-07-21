@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   wm-freegpt:
-    image: ghcr.io/wm-chatgpt/wm-freegpt:main
+    image: ghcr.io/wm-chatgpt/wm-freegpt:latest
     restart: always
     ports:
       - "9800:9800"
