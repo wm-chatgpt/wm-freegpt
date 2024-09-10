@@ -13,11 +13,12 @@ func init() {
 	group.ALL("/v1/rgstr", func(r *ghttp.Request) {
 		r.Response.WriteJsonExit(g.Map{"status": "ok"})
 	})
-	group.ALL("/v1/initialize", func(r *ghttp.Request) {
-		r.Response.WriteJsonExit(g.Map{"status": "ok"})
-	})
+	group.ALL("/v1/initialize", ProxyApi)
 	group.ALL("/backend-api/o11y/v1/traces", func(r *ghttp.Request) {
 		r.Response.WriteJsonExit(g.Map{"status": "ok"})
+	})
+	group.ALL("/ces/v1/projects/oai/settings", func(r *ghttp.Request) {
+		r.Response.WriteJsonExit(`{"integrations":{"Segment.io":{"apiHost":"chatgpt.com/ces/v1","apiKey":"oai"}}}`)
 	})
 	group.GET("/c/:convId", C)
 	group.GET("/g/:gizmoId", G)

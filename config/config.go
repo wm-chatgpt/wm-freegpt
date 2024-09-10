@@ -16,6 +16,7 @@ import (
 var (
 	PORT         = 9800                                // 端口
 	AssetPrefix  = "https://oaistatic-cdn.closeai.biz" // 资源前缀
+	RemixBuildId = "d473212e"                          // 缓存版本号
 	CacheBuildId = "0tFA7GWwXvruSzwhEYslA"             // 缓存版本号
 	BuildId      = "0tFA7GWwXvruSzwhEYslA"             // 线上版本号
 	Script       = "https://cdn.oaistatic.com/_next/static/chunks/2565-263427db2ed7a61a.js?dpl=37f91bfd782f6b4fb81dd5cd885a42d5d31cc4a3"

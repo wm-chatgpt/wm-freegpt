@@ -20,7 +20,7 @@ temp
 # Go workspace file
 go.work
 main
-resource/template/dynamic_templates/
+#resource/template/dynamic_templates/
 config/session.json
 config.yaml
 .idea
