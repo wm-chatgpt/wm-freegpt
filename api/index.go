@@ -2,6 +2,7 @@ package api
 
 import (
 	"cockroachai/config"
+	"fmt"
 
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
@@ -54,17 +55,126 @@ func Index(r *ghttp.Request) {
     "scriptLoader": []
 }`
 
+	ttt := `
+{
+                            "clientBootstrap": {
+                                "accountsStatus": null,
+                                "authStatus": "logged_in",
+                                "serviceStatus": {},
+                                "session": {
+                                    "accessToken": "%s",
+                                    "user": {
+                                        "email": "yuanbao@openoai.cn",
+                                        "id": "o81vN6vl5jjE-96fNSGEW_DewM24",
+                                        "image": null,
+                                        "name": "user-GEW_DewM24",
+                                        "picture": null
+                                    }
+                                },
+                                "statsig": {
+                                    "payload": {
+                                        "feature_gates": {
+                                            "458009956": {
+                                                "name": "458009956",
+                                                "value": true
+                                            },
+                                            "740954505": {
+                                                "name": "740954505",
+                                                "value": true
+                                            }
+                                        },
+                                        "hash_used": "djb2",
+                                        "layer_configs": {
+                                            "2723963139": {
+                                                "name": "2723963139",
+                                                "value": {
+                                                    "config": {
+                                                        "impl": "rm_score",
+                                                        "rm_gpt4_vs_sahara": "rm-model-switcher-1p-d36-0325",
+                                                        "rm_renderer": "harmony_v4.0.13_8k_turbo_mm"
+                                                    },
+                                                    "is_AG8PqS2q_enabled": true,
+                                                    "is_conversation_model_switching_allowed": true,
+                                                    "is_dynamic_model_enabled": true,
+                                                    "show_message_model_info": true,
+                                                    "show_message_regenerate_model_selector": true,
+                                                    "show_message_regenerate_model_selector_on_every_message": true,
+                                                    "show_rate_limit_downgrade_banner": true
+                                                }
+                                            },
+                                            "3048336830": {
+                                                "name": "3048336830",
+                                                "value": {
+                                                    "is-enabled": true
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "user": {
+                                        "userID": "user-fakeoai"
+                                    }
+                                },
+                                "user": {
+                                    "email": "yuanbao@openoai.cn",
+                                    "id": "o81vN6vl5jjE-96fNSGEW_DewM24",
+                                    "image": null,
+                                    "name": "user-GEW_DewM24",
+                                    "picture": null
+                                }
+                            },
+                            "cspScriptNonce": "aab26913-317e-4628-945d-baa008dbf46f",
+                            "dehydratedState": {
+                                "mutations": [],
+                                "queries": [{
+                                    "queryHash": "[\"session\"]",
+                                    "queryKey": ["session"],
+                                    "state": {
+                                        "data": {
+                                            "accessToken": "%s",
+                                            "user": {
+                                                "email": "yuanbao@openoai.cn",
+                                                "id": "o81vN6vl5jjE-96fNSGEW_DewM24",
+                                                "image": null,
+                                                "name": "user-GEW_DewM24",
+                                                "picture": null
+                                            }
+                                        },
+                                        "dataUpdateCount": 1,
+                                        "dataUpdatedAt": 1725450210242,
+                                        "error": null,
+                                        "errorUpdateCount": 0,
+                                        "errorUpdatedAt": 0,
+                                        "fetchFailureCount": 0,
+                                        "fetchFailureReason": null,
+                                        "fetchMeta": null,
+                                        "fetchStatus": "idle",
+                                        "isInvalidated": false,
+                                        "status": "success"
+                                    }
+                                }]
+                            },
+                            "isAndroidChrome": false,
+                            "isElectron": false,
+                            "isIos": false
+                        }`
 	propsJson := gjson.New(props)
+	s := uuid.New().String()
 	propsJson.Set("query.model", model)
 	propsJson.Set("buildId", config.BuildId)
 	propsJson.Set("assetPrefix", config.AssetPrefix)
+
 	r.Cookie.Set("oai-did", uuid.New().String())
 
-	r.Response.WriteTpl("dynamic_templates/"+config.CacheBuildId+"/chat.html", g.Map{
-		"props":       propsJson,
-		"arkoseUrl":   config.ArkoseUrl,
-		"assetPrefix": config.AssetPrefix,
-		"envScript":   config.GetEnvScript(ctx),
+	r.Response.WriteTpl("dynamic_templates/"+"d473212e"+"/index.html", g.Map{
+		"props":            propsJson,
+		"arkoseUrl":        config.ArkoseUrl,
+		"assetPrefix":      config.AssetPrefix,
+		"envScript":        config.GetEnvScript(ctx),
+		"REMIX_NONCE__":    s,
+		"REMIX_URL__":      "/",
+		"REMIX_CONTEXT0__": fmt.Sprintf(ttt, t, t),
+		"REMIX_CONTEXT1__": "null",
+		"REMIX_CONTEXT2__": "null",
 	})
 }
 func C(r *ghttp.Request) {
