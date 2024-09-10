@@ -104,6 +104,6 @@ func AuthSession(r *ghttp.Request) {
 
 // /auth/logout
 func AuthLogout(r *ghttp.Request) {
-	r.Cookie.Set("session-token", "")
+	r.Cookie.Set(config.AccessToken, "")
 	r.Response.RedirectTo("/")
 }
