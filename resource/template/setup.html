@@ -1,119 +1,128 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>表单页面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搭建同款提示</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-            text-align: center;
-            padding-top: 100px;
-            margin: 0;
-        }
-        .login-container {
-            width: 100%;
-            max-width: 300px;
-            margin: auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-        }
-        .login-container h2 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-        .form-field {
-            position: relative;
-            margin-bottom: 15px;
-        }
-        .password-container {
-            position: relative;
+            font-family: Arial, sans-serif;
         }
 
-        .field-icon {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-70%);
-            cursor: pointer;
+        .button-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
         }
-        input[type='text'], input[type='password'], textarea {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 10px;
-            padding-right: 40px; /* 留出眼睛图标的空间 */
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-        .btn {
-            background-color: #0A8852;
+
+        #showQRCodeBtn {
+            padding: 10px 20px;
+            background-color: #007BFF;
             color: white;
             border: none;
-            padding: 10px 15px;
-            text-align: center;
-            text-decoration: none;
-            display: block;
-            font-size: 16px;
-            margin: 10px 0;
+            border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        #showQRCodeBtn:hover {
+            background-color: #0056b3;
+        }
+
+        /* 模态框的样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
             width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            max-width: 300px;
+            width: 90%;
+            animation: slideInUp 0.4s ease-out;
+        }
+
+        .modal-content img {
+            width: 150px;
+            height: 150px;
             border-radius: 5px;
         }
-        @media (max-width: 768px) {
-            body {
-                padding-top: 50px;
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            color: #555;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
             }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h2>蟑螂账号管理</h2>
-        <form action="" method="post">
-            <div class="form-field">
-                <textarea id="refreshCookie" name="refreshCookie" placeholder="Refresh Cookie" rows="3"></textarea>
-            </div>
-            <div class="password-container">
-                <input type="password" id="adminPassword" name="adminPassword" placeholder="管理员密码">
-                <span id="eyeIcon" toggle="#adminPassword" class="far fa-eye-slash field-icon toggle-password"></span>
-            </div>
-            <button type="submit" class="btn">确认</button>
-            <button type="reset" class="btn">清空</button>
-        </form>
-        <div id="result" class="mt-4">{{.result}}</div>
-    </div>
 
-    <script>
-        function togglePasswordVisibility() {
-            var passwordInput = document.getElementById('adminPassword');
-            var eyeIcon = document.getElementById('eyeIcon');
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                eyeIcon.classList.remove('fa-eye-slash');
-                eyeIcon.classList.add('fa-eye');
-            } else {
-                passwordInput.type = 'password';
-                eyeIcon.classList.remove('fa-eye');
-                eyeIcon.classList.add('fa-eye-slash');
-            }
+<div class="button-container">
+    <button id="showQRCodeBtn">搭建同款</button>
+</div>
+
+<!-- 模态框 -->
+<div id="qrCodeModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeModalBtn">&times;</span>
+        <img src="your-qrcode-image-url-here" alt="QR Code">
+        <p>扫描二维码获取更多信息</p>
+    </div>
+</div>
+
+<script>
+    const showQRCodeBtn = document.getElementById('showQRCodeBtn');
+    const qrCodeModal = document.getElementById('qrCodeModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    // 显示模态框
+    showQRCodeBtn.addEventListener('click', () => {
+        qrCodeModal.style.display = 'flex';
+    });
+
+    // 点击关闭按钮关闭模态框
+    closeModalBtn.addEventListener('click', () => {
+        qrCodeModal.style.display = 'none';
+    });
+
+    // 点击模态框外部也关闭模态框
+    window.addEventListener('click', (e) => {
+        if (e.target === qrCodeModal) {
+            qrCodeModal.style.display = 'none';
         }
-        document.addEventListener('DOMContentLoaded', function () {
-            var eyeIcon = document.getElementById('eyeIcon');
-            eyeIcon.addEventListener('click', togglePasswordVisibility);
-            var result = document.getElementById('result');
-            if (result.textContent.startsWith('{"accessToken":')) {
-                result.style.backgroundColor = 'green';
-                result.textContent = "获取成功";
-            } else {
-                result.style.backgroundColor = 'red';
-            }
-        });
-    </script>
+    });
+</script>
 </body>
 </html>
