@@ -31,49 +31,6 @@ func init() {
 
 	group.GET("/api/auth/session", AuthSession)
 	group.ALL("/public-api/*any", ProxyApi)
-	group.ALL("/manifest-search.json", func(r *ghttp.Request) {
-		r.Response.Write(`{
-  "name": "SearchGPT",
-  "short_name": "SearchGPT",
-  "start_url": "/search",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff",
-  "icons": [
-    {
-      "src": "/images/search/searchgpt-icon-48x48.png",
-      "type": "image/png",
-      "sizes": "48x48"
-    },
-    {
-      "src": "/images/search/searchgpt-icon-72x72.png",
-      "type": "image/png",
-      "sizes": "72x72"
-    },
-    {
-      "src": "/images/search/searchgpt-icon-96x96.png",
-      "type": "image/png",
-      "sizes": "96x96"
-    },
-    {
-      "src": "/images/search/searchgpt-icon-144x144.png",
-      "type": "image/png",
-      "sizes": "144x144"
-    },
-    {
-      "src": "/images/search/searchgpt-icon-192x192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "/images/search/searchgpt-icon-512x512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
-  ]
-}
-`)
-	})
 	group.GET("/api/auth/providers", AuthProviders)
 	group.GET("/api/auth/csrf", AuthCsrf)
 	group.POST("/api/auth/signin/login-web", AuthSigninLoginWeb)
