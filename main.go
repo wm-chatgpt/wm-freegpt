@@ -12,6 +12,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 )
 
@@ -31,6 +32,18 @@ func main() {
 	//if err != nil {
 	//	fmt.Println(err)
 	//}
+
+	// 原始字符串
+	original := "{writeKey:\"oai\",cdnURL:`${RI}://${wI}`}"
+
+	// 正则表达式，确保 writeKey:"oai" 存在，并匹配 `${...}://${...}` 后的 cdnURL
+	re := regexp.MustCompile(`{writeKey:"oai",cdnURL:` + "`" + `[^` + "`" + `]+` + "`")
+
+	// 将匹配的部分替换为 writeKey:"oai",cdnURL:`/ces`
+	replaced := re.ReplaceAllString(original, `{writeKey:"oai",cdnURL:"/ces"`)
+
+	// 输出替换后的结果
+	fmt.Println(replaced)
 
 	s.Run()
 }
@@ -61,7 +74,9 @@ func scanAndReplace() error {
 			newContent = strings.ReplaceAll(newContent, "https://chatgpt.com/public", "/public")
 			newContent = strings.ReplaceAll(string(newContent), "https://ab.chatgpt.com/v1/", "/v1/")
 			newContent = strings.ReplaceAll(string(newContent), "https://tcr9i.chat.openai.com", "")
-
+			re := regexp.MustCompile(`{writeKey:"oai",cdnURL:` + "`" + `[^` + "`" + `]+` + "`")
+			// 将匹配的部分替换为 writeKey:"oai",cdnURL:`/ces`
+			newContent = re.ReplaceAllString(newContent, `{writeKey:"oai",cdnURL:"/ces"`)
 			// 将替换后的内容写回文件
 			err = ioutil.WriteFile(path, []byte(newContent), 0644)
 			if err != nil {
