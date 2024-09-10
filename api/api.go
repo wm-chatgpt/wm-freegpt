@@ -22,6 +22,7 @@ func init() {
 	})
 	group.GET("/c/:convId", C)
 	group.GET("/g/:gizmoId", G)
+	group.GET("/g/:gizmoId/c/:convId", G)
 
 	group.GET("/gpts", Gpts)
 	group.GET("/gpts/mine", Mine)
