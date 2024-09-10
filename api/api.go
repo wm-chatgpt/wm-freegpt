@@ -13,9 +13,7 @@ func init() {
 	group.ALL("/v1/rgstr", func(r *ghttp.Request) {
 		r.Response.WriteJsonExit(g.Map{"status": "ok"})
 	})
-	group.ALL("/v1/initialize", func(r *ghttp.Request) {
-		r.Response.WriteJsonExit(g.Map{"status": "ok"})
-	})
+	group.ALL("/v1/initialize", ProxyApi)
 	group.ALL("/backend-api/o11y/v1/traces", func(r *ghttp.Request) {
 		r.Response.WriteJsonExit(g.Map{"status": "ok"})
 	})
