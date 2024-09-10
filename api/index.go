@@ -116,3 +116,39 @@ func Mine(r *ghttp.Request) {
 		"REMIX_CONTEXT2": "null",
 	})
 }
+
+func Slug(r *ghttp.Request) {
+	ctx := r.GetCtx()
+	t := r.Cookie.Get(config.AccessToken).String()
+	if t == "" {
+		r.Response.RedirectTo("/login")
+	}
+	r.Response.WriteTpl("dynamic_templates/"+config.RemixBuildId+"/slug.html", g.Map{
+		"assetPrefix":    config.AssetPrefix,
+		"envScript":      config.GetEnvScript(ctx),
+		"REMIX_NONCE":    uuid.New().String(),
+		"REMIX_DOMAIN":   "",
+		"REMIX_URL":      r.URL,
+		"REMIX_CONTEXT0": fmt.Sprintf(TData, t, t),
+		"REMIX_CONTEXT1": "null",
+		"REMIX_CONTEXT2": "null",
+	})
+}
+
+func Search(r *ghttp.Request) {
+	ctx := r.GetCtx()
+	t := r.Cookie.Get(config.AccessToken).String()
+	if t == "" {
+		r.Response.RedirectTo("/login")
+	}
+	r.Response.WriteTpl("dynamic_templates/"+config.RemixBuildId+"/search.html", g.Map{
+		"assetPrefix":    config.AssetPrefix,
+		"envScript":      config.GetEnvScript(ctx),
+		"REMIX_NONCE":    uuid.New().String(),
+		"REMIX_DOMAIN":   "",
+		"REMIX_URL":      r.URL,
+		"REMIX_CONTEXT0": fmt.Sprintf(TData, t, t),
+		"REMIX_CONTEXT1": fmt.Sprintf(TData, t, t),
+		"REMIX_CONTEXT2": "null",
+	})
+}
