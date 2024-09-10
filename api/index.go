@@ -15,10 +15,6 @@ func Index(r *ghttp.Request) {
 	if t == "" {
 		r.Response.RedirectTo("/login")
 	}
-	//model := r.Get("model").String()
-	//propsJson.Set("query.model", model)
-	//propsJson.Set("buildId", config.BuildId)
-	//propsJson.Set("assetPrefix", config.AssetPrefix)
 	r.Cookie.Set("oai-did", uuid.New().String())
 	r.Response.WriteTpl("dynamic_templates/"+config.RemixBuildId+"/index.html", g.Map{
 		//"props":          propsJson,
@@ -44,8 +40,6 @@ func C(r *ghttp.Request) {
 
 	g.Log().Debug(r.GetCtx(), "convId", convId)
 	r.Response.WriteTpl("dynamic_templates/"+config.RemixBuildId+"/chat.html", g.Map{
-		//"props":          propsJson,
-		//"arkoseUrl":      config.ArkoseUrl,
 		"assetPrefix":    config.AssetPrefix,
 		"envScript":      config.GetEnvScript(ctx),
 		"REMIX_NONCE":    uuid.New().String(),
@@ -69,8 +63,6 @@ func Gpts(r *ghttp.Request) {
 	}
 
 	r.Response.WriteTpl("dynamic_templates/"+config.RemixBuildId+"/gpts.html", g.Map{
-		//"props":          propsJson,
-		//"arkoseUrl":      config.ArkoseUrl,
 		"assetPrefix":    config.AssetPrefix,
 		"envScript":      config.GetEnvScript(ctx),
 		"REMIX_NONCE":    uuid.New().String(),
@@ -95,8 +87,6 @@ func G(r *ghttp.Request) {
 	}
 	//gizmoId := r.GetRouter("gizmoId").String()
 	r.Response.WriteTpl("dynamic_templates/"+config.RemixBuildId+"/gizmoId.html", g.Map{
-		//"props":          propsJson,
-		//"arkoseUrl":      config.ArkoseUrl,
 		"assetPrefix":    config.AssetPrefix,
 		"envScript":      config.GetEnvScript(ctx),
 		"REMIX_NONCE":    uuid.New().String(),
@@ -116,8 +106,6 @@ func Mine(r *ghttp.Request) {
 		r.Response.RedirectTo("/login")
 	}
 	r.Response.WriteTpl("dynamic_templates/"+config.RemixBuildId+"/mine.html", g.Map{
-		//"props":          propsJson,
-		//"arkoseUrl":      config.ArkoseUrl,
 		"assetPrefix":    config.AssetPrefix,
 		"envScript":      config.GetEnvScript(ctx),
 		"REMIX_NONCE":    uuid.New().String(),
