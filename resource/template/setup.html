@@ -3,21 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>搭建同款提示</title>
+    <title>登录加载动画</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
         }
 
-        .button-container {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+        .container {
+            text-align: center;
         }
 
-        #showQRCodeBtn {
+        #loginBtn {
             padding: 10px 20px;
             background-color: #007BFF;
             color: white;
@@ -28,101 +31,77 @@
             transition: background-color 0.3s ease;
         }
 
-        #showQRCodeBtn:hover {
+        #loginBtn:hover {
             background-color: #0056b3;
         }
 
-        /* 模态框的样式 */
-        .modal {
+        /* 加载动画容器 */
+        .loading-container {
             display: none;
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            position: relative;
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
             text-align: center;
-            max-width: 300px;
-            width: 90%;
-            animation: slideInUp 0.4s ease-out;
         }
 
-        .modal-content img {
-            width: 150px;
-            height: 150px;
-            border-radius: 5px;
+        /* 锁头旋转动画 */
+        .loader i {
+            font-size: 60px;
+            color: #3498db;
+            animation: rotateLock 2s linear infinite, scaleLock 1.5s ease-in-out infinite;
         }
 
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 20px;
-            cursor: pointer;
+        /* 旋转动画 */
+        @keyframes rotateLock {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 缩放动画 */
+        @keyframes scaleLock {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        #statusText {
+            margin-top: 10px;
+            font-size: 18px;
             color: #555;
-        }
-
-        .close-btn:hover {
-            color: #000;
-        }
-
-        @keyframes slideInUp {
-            from {
-                transform: translateY(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
         }
     </style>
 </head>
 <body>
 
-<div class="button-container">
-    <button id="showQRCodeBtn">搭建同款</button>
-</div>
+<div class="container">
+    <button id="loginBtn">登录</button>
 
-<!-- 模态框 -->
-<div id="qrCodeModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" id="closeModalBtn">&times;</span>
-        <img src="your-qrcode-image-url-here" alt="QR Code">
-        <p>扫描二维码获取更多信息</p>
+    <!-- 加载动画容器 -->
+    <div class="loading-container" id="loadingContainer">
+        <div class="loader">
+            <i class="fas fa-lock"></i>
+        </div>
+        <p id="statusText">人机检测破解ing...</p>
     </div>
 </div>
 
 <script>
-    const showQRCodeBtn = document.getElementById('showQRCodeBtn');
-    const qrCodeModal = document.getElementById('qrCodeModal');
-    const closeModalBtn = document.getElementById('closeModalBtn');
+    const loginBtn = document.getElementById('loginBtn');
+    const loadingContainer = document.getElementById('loadingContainer');
+    const statusText = document.getElementById('statusText');
 
-    // 显示模态框
-    showQRCodeBtn.addEventListener('click', () => {
-        qrCodeModal.style.display = 'flex';
-    });
+    loginBtn.addEventListener('click', () => {
+        // 隐藏登录按钮，显示加载容器
+        loginBtn.style.display = 'none';
+        loadingContainer.style.display = 'block';
 
-    // 点击关闭按钮关闭模态框
-    closeModalBtn.addEventListener('click', () => {
-        qrCodeModal.style.display = 'none';
-    });
-
-    // 点击模态框外部也关闭模态框
-    window.addEventListener('click', (e) => {
-        if (e.target === qrCodeModal) {
-            qrCodeModal.style.display = 'none';
-        }
+        // 模拟破解过程
+        setTimeout(() => {
+            // 破解完成后，显示跳转提示
+            statusText.textContent = '登录跳转中...';
+            setTimeout(() => {
+                // 模拟登录跳转
+                window.location.href = 'https://www.example.com'; // 替换为实际的跳转地址
+            }, 1500);
+        }, 3000); // 模拟破解3秒时间
     });
 </script>
+
 </body>
 </html>
