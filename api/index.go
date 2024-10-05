@@ -62,7 +62,7 @@ func Gpts(r *ghttp.Request) {
 		return
 	}
 
-	r.Response.WriteTpl("dynamic_templates/"+config.RemixBuildId+"/gpts.html", g.Map{
+	r.Response.WriteTpl("dynamic_templates/"+config.RemixBuildId+"/gpts/editor/:slug?.html", g.Map{
 		"assetPrefix":    config.AssetPrefix,
 		"envScript":      config.GetEnvScript(ctx),
 		"REMIX_NONCE":    uuid.New().String(),
@@ -86,7 +86,7 @@ func G(r *ghttp.Request) {
 		return
 	}
 	//gizmoId := r.GetRouter("gizmoId").String()
-	r.Response.WriteTpl("dynamic_templates/"+config.RemixBuildId+"/gizmoId.html", g.Map{
+	r.Response.WriteTpl("dynamic_templates/"+config.RemixBuildId+"/g/:gizmoId.html", g.Map{
 		"assetPrefix":    config.AssetPrefix,
 		"envScript":      config.GetEnvScript(ctx),
 		"REMIX_NONCE":    uuid.New().String(),
@@ -105,7 +105,7 @@ func Mine(r *ghttp.Request) {
 	if t == "" {
 		r.Response.RedirectTo("/login")
 	}
-	r.Response.WriteTpl("dynamic_templates/"+config.RemixBuildId+"/mine.html", g.Map{
+	r.Response.WriteTpl("dynamic_templates/"+config.RemixBuildId+"/gpts/mine.html", g.Map{
 		"assetPrefix":    config.AssetPrefix,
 		"envScript":      config.GetEnvScript(ctx),
 		"REMIX_NONCE":    uuid.New().String(),
