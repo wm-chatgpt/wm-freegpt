@@ -89,7 +89,7 @@ func scanAndReplace() error {
 		return nil
 	})
 
-	err = filepath.Walk("./resource/template/dynamic_templates/d473212e", func(path string, info os.FileInfo, err error) error {
+	err = filepath.Walk("./resource/template/dynamic_templates/0f94f55f", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}

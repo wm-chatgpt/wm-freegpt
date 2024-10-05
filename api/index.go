@@ -25,7 +25,7 @@ func Index(r *ghttp.Request) {
 		"REMIX_DOMAIN":   "http://localhost:9800/",
 		"REMIX_URL":      r.URL,
 		"REMIX_CONTEXT0": fmt.Sprintf(TData, t, t),
-		"REMIX_CONTEXT1": "null",
+		"REMIX_CONTEXT1": `{"prefetchSearch": null}`,
 		"REMIX_CONTEXT2": "null",
 	})
 }
@@ -39,14 +39,14 @@ func C(r *ghttp.Request) {
 	convId := r.GetRouter("convId").String()
 
 	g.Log().Debug(r.GetCtx(), "convId", convId)
-	r.Response.WriteTpl("dynamic_templates/"+config.RemixBuildId+"/chat.html", g.Map{
+	r.Response.WriteTpl("dynamic_templates/"+config.RemixBuildId+"/c/:conversationId.html", g.Map{
 		"assetPrefix":    config.AssetPrefix,
 		"envScript":      config.GetEnvScript(ctx),
 		"REMIX_NONCE":    uuid.New().String(),
 		"REMIX_DOMAIN":   "http://localhost:9800",
 		"REMIX_URL":      r.URL,
 		"REMIX_CONTEXT0": fmt.Sprintf(TData, t, t),
-		"REMIX_CONTEXT1": "null",
+		"REMIX_CONTEXT1": `{"prefetchSearch": null}`,
 		"REMIX_CONTEXT2": "null",
 	})
 }
